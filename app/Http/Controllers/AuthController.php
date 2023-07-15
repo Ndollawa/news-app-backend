@@ -25,15 +25,22 @@ class AuthController extends Controller
     public function register(UserRegistrationRequest $request)
     {
         $request->validated($request->all());
-        
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        $user->profile->roles = [1003];
         $user->save();
         
+        // Create a new profile for the user
+        $profile = new Profile();
+        $profile->user_id = $user->id;
+        $profile->roles = [1003];
+        $profile->save();
+        
+        // Assign the profile to the user
+        $user->profile()->associate($profile);
+        $user->save();
         // Create JWTs
         $customClaims = [
             'user' => [
