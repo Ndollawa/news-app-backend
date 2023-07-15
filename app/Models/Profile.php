@@ -37,10 +37,7 @@ class Profile extends Model
         'updated_at',
         'deleted_at'
     ];
-    
-    protected $attributes =[
-        'roles' => ['user'=>'1003'],
-    ];
+  
 
     public function user()
     {
