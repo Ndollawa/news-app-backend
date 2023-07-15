@@ -36,7 +36,7 @@ class AuthController extends Controller
         // Create a new profile for the user
         $profile = new Profile();
         $profile->user_id = $user->id;
-        $profile->roles = $json = json_encode([1003]);
+        $profile->roles = [1003];
         $profile->save();
         
         // Assign the profile to the user
