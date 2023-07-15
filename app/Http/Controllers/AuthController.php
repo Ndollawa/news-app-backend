@@ -34,14 +34,11 @@ class AuthController extends Controller
         $user->save();
         
         // Create a new profile for the user
-        $profile = new Profile();
-        $profile->user_id = $user->id;
-        $profile->roles = [1003];
-        $profile->save();
-        
-        // Assign the profile to the user
-        $user->profile()->associate($profile);
-        $user->save();
+ 
+        $profile = new Profile([
+            'roles' => [1003]
+        ]);
+        $user->profile()->save($profile);
         // Create JWTs
         $customClaims = [
             'user' => [
