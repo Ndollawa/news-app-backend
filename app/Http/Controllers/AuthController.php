@@ -17,6 +17,8 @@ class AuthController extends Controller
     // public function __construct()
     // {
     //     $this->middleware('auth:api', ['except' => ['login','register']]);
+       
+    
     // }
         use HttpResponses;
 
@@ -29,9 +31,9 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
+        $user->profile->roles = [1003];
         $user->save();
-
+        
         // Create JWTs
         $customClaims = [
             'user' => [
@@ -99,20 +101,25 @@ public function login(UserLoginRequest $request)
         return $this->success('','Successfully logged out');
     }
 
-    public function refresh()
+    public function refresh(Request $request)
     {
+
+        $jwtToken = $request->cookie('jwt');
+        return($jwtToken);
+                if ($jwtToken) {
+                    try {
+                        $user = JWTAuth::parseToken()->authenticate();
+        
+                        if ($user) {
+                            // Set the authenticated user in the Laravel Auth facade
+                            Auth::setUser($user);
+                        }
+                    } catch (\Exception $e) {
+                        // Handle token validation errors
+                        return response()->json(['message' => 'Unauthorized'], 401);
+                    }
         $accessToken = Auth::refresh();
-//          $user = Auth::user();
-//   // Create JWTs
-//   $user = Auth::user(); 
-//   $customClaims = [
-//       'id' => $user->_id,
-//       'email' => $user->email,
-//       'name' => $user->name,
-//       'userProfile' => $user->profile,
-//   ];
-  
-//   $accessToken = JWTAuth::claims($customClaims)->fromUser($user);
+                }
 //   // Create secure cookie with new accessToken
 $cookie = cookie('jwt', $accessToken, 1440,null,null,true, true,'None'); // Create a secure cookie
         return $this->success(

@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticlesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,18 +23,22 @@ Route::group(['prefix'=>'v1','middleware'=>'cors'], function (){
     //AUTH ROUTES,'middleware' =>['auth:api']
     Route::group(['prefix' => 'auth'], function (){
     Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
-    Route::get('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware(['jwt.cookie','jwt'])->name('logout');
+    Route::post('/refresh', [AuthController::class, 'refresh'])->middleware(['jwt.cookie','jwt'])->name('refresh');
     });
 
-        Route::resource('articles', ArticlesController::class);
-
-    Route::middleware(['auth:api','jwt','jwt.cookie'])->group(function () {
+    Route::middleware(['jwt.cookie','jwt','auth:api'])->group(function () {
         // Add your protected routes here
         Route::get('user', function (Request $request) {
             return $request->user();
         });
+        Route::apiResource('articles', ArticlesController::class);
+        Route::put('/profile/edit',[ProfileController::class, 'updateProfile']);
+        Route::patch('/profile/edit',[ProfileController::class, 'updateProfile']);
+        Route::put('/profile/preferences/edit',[ProfileController::class, 'updateProfilePreference']);
+        Route::patch('/profile/preferences/edit',[ProfileController::class, 'updateProfilePreference']);
+
     });   
 });
 

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->unique();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->enum('gender',['male','female'])->nullable();
+            $table->string('bio',255)->nullable();
+            $table->string('phone',255)->nullable();
             $table->string('city',255)->nullable();
             $table->string('state',255)->nullable();
             $table->string('country',255)->nullable();

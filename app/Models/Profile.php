@@ -9,7 +9,7 @@ class Profile extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['user_id','gender','user_image','city','state','country','feeds_preference'];
+    protected $fillable = ['user_id','bio','phone','gender','user_image','city','state','country','feeds_preference'];
     
       /**
      * The attributes that are not mass assignable.
