@@ -41,7 +41,7 @@ class FetchNewsApiData extends Command
     // Fetch articles for each page
     for ($page = 1; $page <= $totalPages; $page++) {
         // Build the API request URL with the page parameter
-        $url = "https://newsapi.org/v2/everything?q=global%20news&page=$page&from=$startDate&to=$endDate&sortBy=popularity&apiKey=".env('NEWSAPI_API_KEY');
+        $url = "https://newsapi.org/v2/everything?sources='australian-financial-review,bleacher-report,buzzfeed,bild,bbc-sports,cnn,bbc-news,abc-news,al-jazeera-english,ary-news,associated-press,cbc-news,bloomberg,bussiness-insider,cbs-news,fox-news,fox-sports,espn,focusgoogle-news'&page=$page&from=$startDate&to=$endDate&sortBy=popularity&apiKey=".env('NEWSAPI_API_KEY');
 
         $response = $client->get($url);
         $articles = json_decode($response->getBody()->getContents(), true)['articles'];
@@ -62,7 +62,7 @@ class FetchNewsApiData extends Command
                     'title' => $article['title'],
                     'source_id' => $article['source']['id'],
                     'source_name' => $article['source']['name'],
-                    'source' => 'New York Times',
+                    'source' => 'New Api',
                     'content' => $article['content'],
                     // 'category' => $article['id'],
                     'author' => $article['author'],
