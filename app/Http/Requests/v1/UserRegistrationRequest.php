@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
-class ProfilePreferenceRequest extends FormRequest
+class UserRegistrationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,8 +23,9 @@ class ProfilePreferenceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'preferred_sources' => ['array'],
-            'preferred_authors' => ['array'],
+            'name' => ['required','string','max:255'],
+            'email' => ['required','email','unique:users,email','max:255'],
+            'password' => ['required','string','confirmed',Password::min(6)->mixedCase()->numbers()->symbols()],
         ];
     }
 }

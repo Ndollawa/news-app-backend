@@ -1,5 +1,5 @@
 <?php
-namespace App\Traits;
+namespace App\Traits\v1;
 
 trait HttpResponses {
 

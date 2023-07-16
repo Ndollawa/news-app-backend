@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\v1;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Models\Profile;
-use App\Traits\HttpResponses;
-use App\Http\Requests\UserRegistrationRequest;
-use App\Http\Requests\UserLoginRequest;
+use App\Models\v1\Profile;
+use App\Traits\v1\HttpResponses;
+use App\Http\Requests\v1\UserRegistrationRequest;
+use App\Http\Requests\v1\UserLoginRequest;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
 
 
 class AuthController extends Controller

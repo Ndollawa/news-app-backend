@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\v1;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\ArticlesResource;
-use App\Models\Article;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\v1\ArticlesResource;
+use App\Models\v1\Article;
 
 class ArticlesController extends Controller
 {
@@ -13,7 +14,8 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        return ArticlesResource::collection(Article::all());
+        return ArticlesResource::collection(Article::orderByDesc('published_at')->paginate(200));
+
     }
 
     /**
@@ -35,7 +37,7 @@ class ArticlesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Article  $iphp)
+    public function show(Article  $id)
     {
         return new ArticlesResource($id);
     }

@@ -18,7 +18,7 @@ class VerifyJWT
     public function handle($request, Closure $next)
     {
         $jwtToken = $request->cookie('jwt');
-
+// dd($jwtToken);
         if ($jwtToken) {
             try {
                 $user = JWTAuth::parseToken()->authenticate();

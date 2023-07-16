@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
-use App\Models\Article;
+use App\Models\v1\Article;
   
 
 class FetchNewyorkTimesApiData extends Command

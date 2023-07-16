@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
-use App\Models\Article;
+use App\Models\v1\Article;
 
 
 class FetchNewsApiData extends Command
@@ -62,7 +62,7 @@ class FetchNewsApiData extends Command
                     'title' => $article['title'],
                     'source_id' => $article['source']['id'],
                     'source_name' => $article['source']['name'],
-                    'source' => 'New Api',
+                    'source' => 'NewsApi',
                     'content' => $article['content'],
                     // 'category' => $article['id'],
                     'author' => $article['author'],

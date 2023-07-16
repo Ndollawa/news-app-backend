@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class ProfileUpdateRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,14 +23,12 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
-        'id' => ['required','string'],
         'name' => ['required','string','max:255'],
-        'email' => ['required','email','unique:users,email','max:255'],
+        'email' => ['required','email','max:255'],
         'password' => ['string','confirmed',Password::min(6)->mixedCase()->numbers()->symbols()],
         'gender' => ['string'],
         'phone' => ['string','max:15'],
-        'user_image' => ['string','image'],
+        'user_image' => ['image','mimes:jpeg,png,jpg,gif'],
         'city' => ['string'],
         'state' => ['string'],
         'country' => ['string'],
