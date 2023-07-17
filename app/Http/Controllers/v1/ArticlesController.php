@@ -14,7 +14,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        return ArticlesResource::collection(Article::orderByDesc('published_at')->paginate(200));
+      return ArticlesResource::collection(Article::orderByDesc('published_at')->paginate());
 
     }
 
