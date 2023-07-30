@@ -9,7 +9,7 @@ class Profile extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['user_id','bio','phone','gender','user_image','city','state','country','feeds_preference'];
+    protected $fillable = ['user_id','roles','bio','phone','gender','user_image','city','state','country','preferred_authors','preferred_sources'];
     
       /**
      * The attributes that are not mass assignable.
@@ -17,7 +17,6 @@ class Profile extends Model
      * @var array
      */
     protected $guarded = [
-        'roles',
         'account_status',
     ];
    
@@ -28,7 +27,8 @@ class Profile extends Model
      */
     protected $casts = [
         'roles' => 'array',
-        'feeds_preference' => 'array',
+        'preferred_authors' => 'array',
+        'preferred_sources' => 'array',
     ];
 
 

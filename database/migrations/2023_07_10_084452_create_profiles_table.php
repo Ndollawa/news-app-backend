@@ -24,7 +24,8 @@ return new class extends Migration
             $table->string('country',255)->nullable();
             $table->enum('account_status',['active','deactivated','suspended','banned'])->default('active');
             $table->json('roles')->nullable();
-            $table->json('feeds_preferences')->nullable();
+            $table->json('preferred_authors')->nullable();
+            $table->json('preferred_sources')->nullable();
             $table->timestamps();
         });
     }

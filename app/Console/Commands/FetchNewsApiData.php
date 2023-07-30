@@ -35,7 +35,7 @@ class FetchNewsApiData extends Command
          // Fetch data from the news source API
         $client = new Client();  
         
-    $perPage = 3000; // Specify the number of articles you want per page
+    $perPage = 10000; // Specify the number of articles you want per page
     $totalPages = 3; // Specify the total number of pages you want to retrieve
 
     // Fetch articles for each page
@@ -62,7 +62,7 @@ class FetchNewsApiData extends Command
                     'title' => $article['title'],
                     'source_id' => $article['source']['id'],
                     'source_name' => $article['source']['name'],
-                    'source' => 'NewsApi',
+                    'source' => 'Pulled From: NewsApi',
                     'content' => $article['content'],
                     // 'category' => $article['id'],
                     'author' => $article['author'],

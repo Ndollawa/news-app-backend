@@ -51,7 +51,7 @@ if($statusCode >= 200 && $statusCode < 300){
                 Article::create([
                     'source_id' => $article['_id'],
                     'source_name' => $article['source'],
-                    'source' => 'The New York Times',
+                    'source' => 'Pulled From: The New York Times',
                     'content' => $article['lead_paragraph'],
                     'category' => $article['type_of_material'],
                     'author' => $article['byline']['person'][0]['firstname']." ".$article['byline']['person'][0]['middlename']." ".$article['byline']['person'][0]['lastname'],

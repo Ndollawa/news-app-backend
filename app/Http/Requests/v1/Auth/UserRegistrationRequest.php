@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\v1;
+namespace App\Http\Requests\v1\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
-class UserLoginRequest extends FormRequest
+class UserRegistrationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +23,9 @@ class UserLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required','email'],
-            'password' => ['required','string','min:6'],
+            'name' => ['required','string','max:255'],
+            'email' => ['required','email','unique:users,email','max:255'],
+            'password' => ['required','string','confirmed',Password::min(6)->mixedCase()->numbers()->symbols()],
         ];
     }
 }

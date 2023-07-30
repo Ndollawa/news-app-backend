@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\v1;
+namespace App\Http\Requests\v1\Article;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProfilePreferenceRequest extends FormRequest
+class GetArticlesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,12 @@ class ProfilePreferenceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'preferred_sources' => ['array'],
-            'preferred_authors' => ['array'],
+            'authors' => ['nullable','string'],
+            'q' => ['nullable','string'],
+            'page' => ['required','string','min:1'],
+            'sources' => ['nullable','string'],
+            // 'date_from' => ['nullable','sometimes','date'],
+            // 'date_to' => ['nullable','sometimes','date','after_or_equal:date_from'],
         ];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\v1;
+namespace App\Http\Requests\v1\Article;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -30,7 +30,7 @@ class ArticlesRequest extends FormRequest
             'image_url' => ['required','string'],
             'article_url' => ['required','string'],
             'source_api' => ['required','string'],
-            'source_api' => ['required','string'],
+            'source_name' => ['required','string'],
             'source_id' => ['required','string'],
             'source' => ['required','string'],
             'published_at' => ['required','string','date'],

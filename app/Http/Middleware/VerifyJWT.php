@@ -2,36 +2,27 @@
 
 namespace App\Http\Middleware;
 
+use App\Traits\v1\HttpResponses;
 use Closure;
-use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class VerifyJWT
 {
+
+    use HttpResponses;
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\JsonResponse)  $next
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next): JsonResponse
     {
-        $jwtToken = $request->cookie('jwt');
-        if ($jwtToken) {
-            try {
-                $user = JWTAuth::parseToken()->authenticate();
-
-                if ($user) {
-                    // Set the authenticated user in the Laravel Auth facade
-                    Auth::setUser($user);
-                }
-            } catch (\Exception $e) {
-                // Handle token validation errors
-                return response()->json(['message' => 'Unauthorized'], 401);
-            }
+        $jwtCookie = $request->cookie('jwt');
+        if(!$jwtCookie){
+            return $this->error(['message' =>'Unauthorized'],null,401);
         }
-
+        $request->headers->set('Authorization', "Bearer {$jwtCookie}");
         return $next($request);
     }
 }

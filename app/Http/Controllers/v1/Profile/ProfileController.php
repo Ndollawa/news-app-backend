@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\v1;
+namespace App\Http\Controllers\v1\Profile;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\ProfileUpdateRequest;
-use App\Http\Requests\v1\ProfilePreferenceRequest;
+use App\Http\Requests\v1\Profile\ProfileUpdateRequest;
+use App\Http\Requests\v1\Profile\ProfilePreferenceRequest;
 use App\Traits\v1\HttpResponses;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
     use HttpResponses;
-
-    public function updateProfile(ProfileUpdateRequest $request)
+// ProfileUpdate
+    public function updateProfile(Request $request)
     {
-        $request->validated($request->all());
+        // return $this->success(json_encode($request->user_image['name']));
+        // $request->validated($request->all());
     
         $user = User::findOrFail(Auth::user()->id);
         $user->name = $request->name;
@@ -46,17 +47,17 @@ class ProfileController extends Controller
     
         return $this->success($user, 'Profile updated successfully.');
     }
-    
-    public function updateProfilePreference(ProfilePreferenceRequest $request)
+    // ProfilePreference
+    public function updateProfilePreference(Request $request)
     {
-        $request->validated($request->all());
-    
+        // $request->validated($request->only(['preferred_authors','preferred_sources']));
         $profile = Auth::user()->profile;
-        $profile->feed_preferences = [
+        $profile->update([
+            // "feeds_preferences" => [
             'preferred_authors' => $request->preferred_authors,
-            'preferred_sources' => $request->preferred_sources
-        ];
-        $profile->save();
+            'preferred_sources' => $request->preferred_sources,
+        // ]
+        ]);
     
         return $this->success($profile, 'Profile preference updated successfully.');
     }
