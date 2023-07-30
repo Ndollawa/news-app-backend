@@ -14,11 +14,10 @@ use Illuminate\Http\Request;
 class ProfileController extends Controller
 {
     use HttpResponses;
-// ProfileUpdate
-    public function updateProfile(Request $request)
+// 
+    public function updateProfile(ProfileUpdateRequest $request)
     {
-        // return $this->success(json_encode($request->user_image['name']));
-        // $request->validated($request->all());
+        $request->validated($request->all());
     
         $user = User::findOrFail(Auth::user()->id);
         $user->name = $request->name;
